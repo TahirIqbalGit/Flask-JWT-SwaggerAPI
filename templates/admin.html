@@ -126,16 +126,16 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav">
-                        <a href="" class="nav-item nav-link active">Home</a>
-                        <a href="dashboard" class="nav-item nav-link">Dashboard</a>
+                        <a href="{{url_for('site.home')}}" class="nav-item nav-link">Home</a>
+                        <a href="{{url_for('site.admin')}}" class="nav-item nav-link active">Dashboard</a>
                         {# <a href="" class="nav-item nav-link">Products</a> 
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Products</a>
+                            <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Products</a>
                             <div class="dropdown-menu">
                                 <a href="#" class="dropdown-item">Electronics</a>
                                 <a href="#" class="dropdown-item">Wearhouse</a>
                             </div>
-                        </div> #}
+                        </div>#}
                     </div>
                     <form class="d-flex">
                         <div class="input-group">                    
@@ -144,27 +144,36 @@
                         </div>
                     </form>
                     <div class="navbar-nav">
-                        <a href="login" class="nav-item nav-link">Login</a>
+                        <a href="logout" class="nav-item nav-link">Signout</a>
                     </div>
                 </div>
             </div>
         </nav>
         <br>
         <br>
-        <div class="row row-cols-1 row-cols-md-3 g-3">
-            {%for i in item%}
-            <div class="col">
-                <div class="card text-dark">
-                    {#<img src="images/thumbnail.svg" class="card-img-top" alt="...">#}
-                    No image uploaded
-                    <div class="card-body">
-                        <h5 class="card-title">{{i.name}}</h5>
-                        <p class="card-text">Provided By: {{i.user.username}}</p>
-                        <a href="" class="btn btn-primary center">Add to cart</a>                        
-                    </div>
-                </div>
+        {% if user.is_admin %}
+        <form method="post">
+            <div class="form-group col-sm-10">
+              <label for="name">Product Name</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Enter Product Name">
+              <small id="emailHelp" class="form-text text-muted">Enter unique name of your product</small>
             </div>
-            {%endfor%}
-        </div>
+            <div class="form-group col-sm-10">
+              <label for="price">Price</label>
+              <input type="number" class="form-control" id="price" name="price" placeholder="Enter Product Price">
+            </div>
+            <div class="form-group col-sm-10">
+                <label for="exampleFormControlSelect1">Select Category</label>
+                <select class="form-control" id="category" name="category">
+                  <option>Electronics</option>
+                  <option>Wearhouse</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+          </form>
+          {% else %}
+          <h3>You're not an Admin. You can add products in your cart...</h3>
+          <h3>Click Home for products list</h3>
+          {%endif%}
     </body>
 </html>

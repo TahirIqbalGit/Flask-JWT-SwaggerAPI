@@ -11,7 +11,7 @@ from models.user import UserModel
 
 from resources import user
 from resources import product
-from main import db, ma
+from main import db, ma, db_user, db_password, database
 
 from marshmallow import ValidationError
 from routes import site
@@ -23,7 +23,8 @@ app.register_blueprint(blueprint)
 app.register_blueprint(site)
 
 app.config['SECRET_KEY'] = "b3s3cr3tk3y"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{db_user}:{db_password}@localhost/{database}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
@@ -32,9 +33,9 @@ api.add_namespace(product.products_ns)
 api.add_namespace(user.user_ns)
 api.add_namespace(user.users_ns)
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
+# @app.before_first_request
+# def create_tables():
+#     db.create_all()
     
 @api.errorhandler(ValidationError)
 def handle_validation_error(error):

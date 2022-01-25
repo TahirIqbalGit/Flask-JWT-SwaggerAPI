@@ -1,0 +1,17 @@
+create table user(
+    -> id int not null primary key auto_increment,
+    -> public_id varchar(80) unique,
+    -> username varchar(80) not null unique,
+    -> email varchar(200) not null unique,
+    -> password varchar(200) not null unique,
+    -> is_admin boolean not null default false);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create table product(
+    -> id int not null primary key auto_increment,
+    -> name varchar(80) not null unique,
+    -> price float not null,
+    -> category varchar(20) not null,
+    -> user_id int,
+    -> FOREIGN KEY (user_id) REFERENCES user(id));
+Query OK, 0 rows affected (0.04 sec)

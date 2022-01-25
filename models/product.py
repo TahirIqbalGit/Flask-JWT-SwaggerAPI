@@ -11,7 +11,7 @@ class ProductModel(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship("UserModel",)
     
-    def __init__(self, name, price, user_id):
+    def __init__(self, name, price, category, user_id):
         self.name = name
         self.price = price
         self.category = category
